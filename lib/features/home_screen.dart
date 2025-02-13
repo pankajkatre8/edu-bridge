@@ -271,7 +271,7 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: _buildServiceButton(
                       context,
-                      "Skills Exchange",
+                      "Skills Swap",
                       Icons.psychology,
                       Colors.green[50]!,
                     ),
@@ -311,18 +311,21 @@ class HomeScreen extends StatelessWidget {
       BuildContext context, String text, IconData icon, Color color) {
     return ElevatedButton(
       onPressed: () {
-        if (text == "All Topics") {
-          Navigator.pushNamed(context, '/all-topics');
-        } else if (text == "Impact Hub") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ImpactHubScreen(),
-            ),
-          );
-        } else {
-          print("$text button pressed");
-        }
+       if (text == "All Topics") {
+  Navigator.pushNamed(context, '/all-topics');
+} else if (text == "Impact Hub") {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const ImpactHubScreen(),
+    ),
+  );
+} else if (text == "Skills Swap") {
+  Navigator.pushNamed(context, '/skill-swap');
+} else {
+  print("$text button pressed");
+}
+
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: color,

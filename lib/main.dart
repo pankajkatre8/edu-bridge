@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'features/home_screen.dart';
 import 'features/all_topics_screen.dart';
 import 'features/ImpactHubScreen.dart';
-import 'features/ProfilePage.dart'; // Profile page import
-import 'features/EdutokScreen.dart'; // Add EdutokScreen import
+import 'features/ProfilePage.dart';
+import 'features/EdutokScreen.dart';
+import 'features/SkillSwapPage.dart'; // Add SkillSwap import
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Edu Bridge',
-      debugShowCheckedModeBanner: false, // Remove debug banner
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: Colors.white,
@@ -40,9 +41,9 @@ class MyApp extends StatelessWidget {
         '/all-topics': (context) => const AllTopicsScreen(),
         '/impact-hub': (context) => const ImpactHubScreen(),
         '/profile': (context) => const ProfilePage(),
-        '/edutok': (context) => const EdutokScreen(), // Add Edutok route
+        '/edutok': (context) => const EdutokScreen(),
+        '/skill-swap': (context) => const SkillSwapPage(), // Add SkillSwap route
       },
-      // Custom page transitions for all routes
       onGenerateRoute: (settings) {
         return PageRouteBuilder(
           settings: settings,
@@ -56,8 +57,10 @@ class MyApp extends StatelessWidget {
                 return const ImpactHubScreen();
               case '/profile':
                 return const ProfilePage();
-              case '/edutok': // Add Edutok case
+              case '/edutok':
                 return const EdutokScreen();
+              case '/skill-swap':
+                return const SkillSwapPage(); // Add SkillSwap case
               default:
                 return const HomeScreen();
             }
