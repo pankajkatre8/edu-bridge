@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'ImpactHubScreen.dart';
 import '../Profile/ProfilePage.dart'; // Ensure this import is correct
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   final List<Map<String, dynamic>> testimonials = const [
     {
@@ -151,7 +152,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
   Widget _buildSearchBar() {
-    TextEditingController _searchController = TextEditingController();
+    TextEditingController searchController = TextEditingController();
 
     return Row(
       children: [
@@ -167,7 +168,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   child: TextField(
-                    controller: _searchController,
+                    controller: searchController,
                     decoration: const InputDecoration(
                       hintText: "Search",
                       hintStyle: TextStyle(
@@ -183,7 +184,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    _performSearch(_searchController.text);
+                    _performSearch(searchController.text);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(8.0),
@@ -284,8 +285,8 @@ class HomeScreen extends StatelessWidget {
                   Expanded(
                     child: _buildServiceButton(
                       context,
-                      "Newest",
-                      Icons.play_circle_outline,
+                      "Launch Pad",
+                      Icons.rocket_launch_rounded,
                       Colors.purple[50]!,
                     ),
                   ),
@@ -306,26 +307,28 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-
-  Widget _buildServiceButton(
+Widget _buildServiceButton(
       BuildContext context, String text, IconData icon, Color color) {
     return ElevatedButton(
       onPressed: () {
-       if (text == "All Topics") {
-  Navigator.pushNamed(context, '/all-topics');
-} else if (text == "Impact Hub") {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const ImpactHubScreen(),
-    ),
-  );
-} else if (text == "Skills Swap") {
-  Navigator.pushNamed(context, '/skill-swap');
-} else {
-  print("$text button pressed");
-}
-
+        if (text == "All Topics") {
+          Navigator.pushNamed(context, '/all-topics');
+        } else if (text == "Impact Hub") {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const ImpactHubScreen(),
+            ),
+          );
+        } else if (text == "Skills Swap") {
+          Navigator.pushNamed(context, '/skill-swap');
+        } else if (text == "Launch Pad") {
+          // Corrected: Ensure no trailing space
+          Navigator.pushNamed(
+              context, '/launchpad'); // Navigate to LaunchPadScreen
+        } else {
+          print("$text button pressed"); // Default case for debugging
+        }
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
@@ -353,7 +356,6 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget _buildImageCards() {
     final List<Map<String, dynamic>> courses = [
       {
@@ -607,7 +609,7 @@ class HomeScreen extends StatelessWidget {
   }
 }
 class BottomNavBarWithAnimation extends StatefulWidget {
-  const BottomNavBarWithAnimation({Key? key}) : super(key: key);
+  const BottomNavBarWithAnimation({super.key});
 
   @override
   _BottomNavBarWithAnimationState createState() =>
@@ -681,8 +683,7 @@ class FadeIn extends StatefulWidget {
   final Widget child;
   final Duration delay;
 
-  const FadeIn({Key? key, required this.child, required this.delay})
-      : super(key: key);
+  const FadeIn({super.key, required this.child, required this.delay});
 
   @override
   _FadeInState createState() => _FadeInState();
@@ -729,9 +730,9 @@ class CourseDetailsScreen extends StatelessWidget {
   final Map<String, dynamic> course;
 
   const CourseDetailsScreen({
-    Key? key,
+    super.key,
     required this.course,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

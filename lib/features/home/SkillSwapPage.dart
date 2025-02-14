@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:async';
 import 'package:lottie/lottie.dart';
 
@@ -47,11 +46,11 @@ class EnhancedSkillCard extends StatelessWidget {
   final VoidCallback onMatch;
 
   const EnhancedSkillCard({
-    Key? key,
+    super.key,
     required this.skill,
     required this.onTap,
     required this.onMatch,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -157,7 +156,7 @@ class EnhancedSkillCard extends StatelessWidget {
   }
 }
 class SkillSwapPage extends StatefulWidget {
-  const SkillSwapPage({Key? key}) : super(key: key);
+  const SkillSwapPage({super.key});
 
   @override
   _SkillSwapPageState createState() => _SkillSwapPageState();

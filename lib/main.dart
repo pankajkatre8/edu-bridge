@@ -5,7 +5,10 @@ import 'features/home/ImpactHubScreen.dart';
 import 'features/Profile/ProfilePage.dart';
 import 'features/home/EdutokScreen.dart';
 import 'features/home/SkillSwapPage.dart';
-import 'features/splash/screens/Splashscreen.dart'; // Add SplashScreen import
+import 'features/splash/screens/Splashscreen.dart';
+import 'features/home/LaunchPadScreen.dart';
+import 'features/auth/presentation/screen/LoginPage.dart';
+import 'features/auth/presentation/screen/RegistrationPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,23 +39,18 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: '/splash', // Changed initial route
-      routes: {
-        '/splash': (context) => const SplashScreen(), // Added splash route
-        '/': (context) => const HomeScreen(),
-        '/all-topics': (context) => const AllTopicsScreen(),
-        '/impact-hub': (context) => const ImpactHubScreen(),
-        '/profile': (context) => const ProfilePage(),
-        '/edutok': (context) => const EdutokScreen(),
-        '/skill-swap': (context) => const SkillSwapPage(),
-      },
-      onGenerateRoute: (settings) {
+      initialRoute: '/splash',
+      onGenerateRoute: (RouteSettings settings) {
         return PageRouteBuilder(
           settings: settings,
           pageBuilder: (context, animation, secondaryAnimation) {
             switch (settings.name) {
               case '/splash':
-                return const SplashScreen(); // Added splash case
+                return const SplashScreen();
+              case '/login':
+                return const LoginPage();
+              case '/register':
+                return const RegistrationPage();
               case '/':
                 return const HomeScreen();
               case '/all-topics':
@@ -65,8 +63,14 @@ class MyApp extends StatelessWidget {
                 return const EdutokScreen();
               case '/skill-swap':
                 return const SkillSwapPage();
+              case '/launchpad':
+                return const LaunchPadScreen();
               default:
-                return const SplashScreen(); // Default to splash
+                return const Scaffold(
+                  body: Center(
+                    child: Text('Page not found!'),
+                  ),
+                );
             }
           },
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -74,8 +78,9 @@ class MyApp extends StatelessWidget {
             const end = Offset.zero;
             const curve = Curves.easeInOut;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-            var offsetAnimation = animation.drive(tween);
+            final tween = Tween(begin: begin, end: end)
+                .chain(CurveTween(curve: curve));
+            final offsetAnimation = animation.drive(tween);
 
             return SlideTransition(
               position: offsetAnimation,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart' show FadeInLeft;
 
 class AllTopicsScreen extends StatefulWidget {
-  const AllTopicsScreen({Key? key}) : super(key: key);
+  const AllTopicsScreen({super.key});
 
   @override
   _AllTopicsScreenState createState() => _AllTopicsScreenState();
@@ -102,11 +102,11 @@ class HoverAnimation extends StatefulWidget {
   final VoidCallback onTap;
 
   const HoverAnimation({
-    Key? key,
+    super.key,
     required this.topic,
     required this.index,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   _HoverAnimationState createState() => _HoverAnimationState();
@@ -142,11 +142,11 @@ class TopicCard extends StatelessWidget {
   final VoidCallback onTap;
 
   const TopicCard({
-    Key? key,
+    super.key,
     required this.topic,
     required this.isHovered,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
