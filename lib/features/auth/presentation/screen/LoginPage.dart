@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../widgets/custom_text_field.dart';
-import '../widgets/custom_button.dart';
-import '../utils/validators.dart';
-import '../services/auth_services.dart';
+import '../utils/validators.dart';  // Add this
+import '../services/auth_services.dart';  // Add this
+import 'CoreRegistrationPage.dart'; // Import the registration page
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,33 +23,42 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(24.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _buildLogo(),
-                    const SizedBox(height: 40),
-                    _buildUsernameField(),
-                    const SizedBox(height: 20),
-                    _buildPasswordField(),
-                    _buildForgotPassword(),
-                    const SizedBox(height: 30),
-                    _buildSignInButton(),
-                    const SizedBox(height: 30),
-                    _buildOrSeparator(),
-                    const SizedBox(height: 30),
-                    _buildGoogleSignIn(),
-                    const SizedBox(height: 25),
-                    _buildCreateAccount(),
-                  ],
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Logo Section (Top 30% of screen)
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Center(
+                  child: _buildLogo(),
                 ),
               ),
-            ),
+
+              // Form Section (Remaining space)
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildWelcomeHeader(),
+                        const SizedBox(height: 32),
+                        _buildInputFields(),
+                        const SizedBox(height: 32),
+                        _buildActionButtons(),
+                        const SizedBox(height: 24),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -58,16 +66,21 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _buildLogo() {
+    return Image.asset(
+      'assets/images/school.png',
+      height: 300,
+      width: 300,
+      errorBuilder: (context, error, stackTrace) {
+        return Icon(Icons.school, size: 80, color: Color(0xFF2E384D));
+      },
+    );
+  }
+
+  Widget _buildWelcomeHeader() {
     return Column(
       children: [
-        SvgPicture.asset(
-          'assets/icons/school.svg',
-          color: const Color(0xFF2E384D),
-          height: 80,
-        ),
-        const SizedBox(height: 20),
         Text(
-          'Login',
+          'Welcome back',
           style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.bold,
@@ -75,52 +88,69 @@ class _LoginPageState extends State<LoginPage> {
             letterSpacing: 0.5,
           ),
         ),
+        const SizedBox(height: 12),
+        Text(
+          'Please enter your account details',
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[600],
+          ),
+        ),
       ],
     );
   }
 
-  Widget _buildUsernameField() {
-    return CustomTextField(
+  Widget _buildInputFields() {
+    return Column(
+      children: [
+        _buildEmailField(),
+        const SizedBox(height: 20),
+        _buildPasswordField(),
+        const SizedBox(height: 16),
+        _buildForgotPassword(),
+      ],
+    );
+  }
+
+  Widget _buildEmailField() {
+    return TextFormField(
       controller: _usernameController,
-      label: 'Email ID',
-      hintText: 'Enter your email',
-      labelStyle: TextStyle(
-        color: Colors.grey[700],
-        fontWeight: FontWeight.w500,
+      decoration: InputDecoration(
+        labelText: 'Email ID',
+        hintText: 'Enter your email',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey[400]!),
+        ),
+        prefixIcon: Icon(Icons.email_outlined, color: Colors.grey[600]),
       ),
       validator: Validators.validateEmail,
-      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: Colors.grey[400]!),
-      ),
     );
   }
 
   Widget _buildPasswordField() {
-    return CustomTextField(
+    return TextFormField(
       controller: _passwordController,
-      label: 'Password',
-      hintText: 'Enter your password',
-      labelStyle: TextStyle(
-        color: Colors.grey[700],
-        fontWeight: FontWeight.w500,
-      ),
       obscureText: _obscureText,
-      validator: Validators.validatePassword,
-      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
-        borderSide: BorderSide(color: Colors.grey[400]!),
-      ),
-      suffixIcon: IconButton(
-        icon: Icon(
-          _obscureText ? Icons.visibility : Icons.visibility_off,
-          color: Colors.grey[600],
-          size: 22,
+      decoration: InputDecoration(
+        labelText: 'Password',
+        hintText: 'Enter your password',
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey[400]!),
         ),
-        onPressed: () => setState(() => _obscureText = !_obscureText),
+        prefixIcon: Icon(Icons.lock_outline, color: Colors.grey[600]),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscureText ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+            color: Colors.grey[600],
+          ),
+          onPressed: () => setState(() => _obscureText = !_obscureText),
+        ),
       ),
+      validator: Validators.validatePassword,
     );
   }
 
@@ -128,102 +158,113 @@ class _LoginPageState extends State<LoginPage> {
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
-        onPressed: () {},
-        style: TextButton.styleFrom(
-          padding: EdgeInsets.zero,
-        ),
+        onPressed: () {
+          // Navigate to Forgot Password Page
+        },
         child: Text(
-          'Forget?',
+          'Forgot Password?',
           style: TextStyle(
             color: const Color(0xFF4CAF50),
-            fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
         ),
       ),
     );
   }
-Widget _buildSignInButton() {
-  return CustomButton(
-    onPressed: _handleSignIn,
-    text: 'Login',
-    isLoading: _isLoading,
-    style: CustomButtonStyle.filled,
-    backgroundColor: const Color(0xFF2196F3),
-    textColor: Colors.white,
-    elevation: 2,
-    borderRadius: 8,
-    borderColor: const Color(0xFF2196F3), // Same as background color
-  );
-}
-  Widget _buildOrSeparator() {
-    return Row(
+
+  Widget _buildActionButtons() {
+    return Column(
       children: [
-        Expanded(
-          child: Divider(
-            color: Colors.grey[400],
-            thickness: 1,
+        _buildLoginButton(),
+        const SizedBox(height: 24),
+        _buildSocialLogin(),
+        const SizedBox(height: 32),
+        _buildRegistrationPrompt(),
+      ],
+    );
+  }
+
+  Widget _buildLoginButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: _handleSignIn,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xFF2196F3),
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            'or',
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+        child: _isLoading
+            ? const CircularProgressIndicator(color: Colors.white)
+            : const Text(
+                'Login',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                ),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildSocialLogin() {
+    return Column(
+      children: [
+        const Row(
+          children: [
+            Expanded(child: Divider()),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text('OR'),
             ),
-          ),
+            Expanded(child: Divider()),
+          ],
         ),
-        Expanded(
-          child: Divider(
-            color: Colors.grey[400],
-            thickness: 1,
+        const SizedBox(height: 24),
+        OutlinedButton.icon(
+          onPressed: _handleGoogleSignIn,
+          icon: SvgPicture.asset(
+            'assets/icons/google.svg',
+            height: 20,
+          ),
+          label: const Text('Continue with Google'),
+          style: OutlinedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            side: const BorderSide(color: Colors.grey),
           ),
         ),
       ],
     );
   }
 
- Widget _buildGoogleSignIn() {
-  return CustomButton(
-    onPressed: _handleGoogleSignIn,
-    text: 'Sign in with Google',
-    style: CustomButtonStyle.outline,
-    icon: SvgPicture.asset(
-      'assets/icons/google.svg',
-      height: 20,
-      color: const Color(0xFF4285F4),
-    ),
-    textColor: const Color(0xFF4285F4),
-    borderColor: const Color(0xFF4285F4),
-    borderRadius: 8,
-    elevation: 0,
-    backgroundColor: Colors.transparent,
-  );
-}
-  Widget _buildCreateAccount() {
+  Widget _buildRegistrationPrompt() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          'New to Finds Logistics?',
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 14,
-          ),
+          'New user? ',
+          style: TextStyle(color: Colors.grey[600]),
         ),
         TextButton(
-          onPressed: () => Navigator.pushReplacementNamed(context, '/register'),
-          style: TextButton.styleFrom(
-            padding: const EdgeInsets.only(left: 6),
-          ),
-          child: Text(
-            'Register',
+          onPressed: () {
+            // Navigate to the Core Registration Page
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CoreRegistrationPage(),
+              ),
+            );
+          },
+          child: const Text(
+            'Create account',
             style: TextStyle(
-              color: const Color(0xFF4CAF50),
-              fontSize: 14,
+              color: Color(0xFF4CAF50),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -233,20 +274,20 @@ Widget _buildSignInButton() {
   }
 
   Future<void> _handleSignIn() async {
-  if (_formKey.currentState!.validate()) {
-    setState(() => _isLoading = true);
-    
-    await AuthService.signIn(
-      _usernameController.text,
-      _passwordController.text,
-    );
-
-    // Navigate to home screen
-    Navigator.pushReplacementNamed(context, '/');
-    
-    setState(() => _isLoading = false);
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+      try {
+        await AuthService.signIn(
+          _usernameController.text,
+          _passwordController.text,
+        );
+        // Navigate to the home page or dashboard
+        Navigator.pushReplacementNamed(context, '/');
+      } finally {
+        if (mounted) setState(() => _isLoading = false);
+      }
+    }
   }
-}
 
   Future<void> _handleGoogleSignIn() async {
     // Implement Google Sign-In

@@ -1,3 +1,4 @@
+// utils/validators.dart
 class Validators {
   static String? validateEmail(String? value) {
     if (value == null || value.isEmpty) return 'Email is required';
@@ -9,7 +10,7 @@ class Validators {
 
   static String? validatePassword(String? value) {
     if (value == null || value.isEmpty) return 'Password is required';
-    if (value.length < 6) return 'Minimum 6 characters';
+    if (value.length < 6) return 'Password must be at least 6 characters';
     return null;
   }
 }

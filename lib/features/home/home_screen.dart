@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'ImpactHubScreen.dart';
 import '../Profile/ProfilePage.dart'; // Ensure this import is correct
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

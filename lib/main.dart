@@ -8,7 +8,7 @@ import 'features/home/SkillSwapPage.dart';
 import 'features/splash/screens/Splashscreen.dart';
 import 'features/home/LaunchPadScreen.dart';
 import 'features/auth/presentation/screen/LoginPage.dart';
-import 'features/auth/presentation/screen/RegistrationPage.dart';
+import 'features/auth/presentation/screen/CoreRegistrationPage.dart'; // Updated import
 
 void main() {
   runApp(const MyApp());
@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
                 return const SplashScreen();
               case '/login':
                 return const LoginPage();
-              case '/register':
-                return const RegistrationPage();
+              case '/register': // Updated to use CoreRegistrationPage
+                return  CoreRegistrationPage();
               case '/':
                 return const HomeScreen();
               case '/all-topics':
