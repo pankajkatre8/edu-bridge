@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'fun_questions_page.dart';
 
 class AdvancedQuestionsPage extends StatefulWidget {
-  const AdvancedQuestionsPage({Key? key}) : super(key: key);
+  const AdvancedQuestionsPage({super.key});
 
   @override
   State<AdvancedQuestionsPage> createState() => _AdvancedQuestionsPageState();

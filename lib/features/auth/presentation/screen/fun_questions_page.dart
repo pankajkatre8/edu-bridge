@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'registration_complete_page.dart';
 
 class FunQuestionsPage extends StatefulWidget {
-  const FunQuestionsPage({Key? key}) : super(key: key);
+  const FunQuestionsPage({super.key});
 
   @override
   State<FunQuestionsPage> createState() => _FunQuestionsPageState();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'skill_swap_page.dart';
 
 class PersonalizedLearningPage extends StatefulWidget {
+  const PersonalizedLearningPage({super.key});
+
   @override
   _PersonalizedLearningPageState createState() => _PersonalizedLearningPageState();
 }

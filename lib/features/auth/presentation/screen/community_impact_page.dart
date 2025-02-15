@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'advanced_questions_page.dart';
 
 class CommunityImpactPage extends StatefulWidget {
-  const CommunityImpactPage({Key? key}) : super(key: key);
+  const CommunityImpactPage({super.key});
 
   @override
   State<CommunityImpactPage> createState() => _CommunityImpactPageState();
